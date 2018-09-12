@@ -1,15 +1,9 @@
 
 type state = {
-  canvasRef: ref(option(ReasonReact.reactRef))
+  canvasRef: ref(option(Dom.element))
 };
 
 
-let handleClick = (_event, self) => {
-	/*switch (self.state.canvasRef^) {
-	|	None => ()
-	|	Some(r) => self.state.canvasRef.fillRect( Canvas.getContext( self.state.canvasRef, "2d"), 0.0, 0.0, 100, 100);
-};*/
-};
 
 let setCanvasRef = (theRef, {ReasonReact.state}) => {
 	state.canvasRef := Js.Nullable.toOption(theRef);
@@ -19,9 +13,19 @@ let component = ReasonReact.reducerComponent("CanvasThing");
 
 
 let make = (_children) => {
+	let handleClick = (_event, self) => {
+			Js.log(self.state);
+		/*switch (self.state.canvasRef^) {
+		|	None => ()
+		|	Some(r) => self.state.canvasRef.fillRect( Canvas.getContext( self.state.canvasRef, "2d"), 0.0, 0.0, 100, 100);
+	}*/
+
+	};
+
+	{
 	...component,
 	initialState: () => {
-    	{canvasRef: ()}
+    	{canvasRef: ref(None)}
     },
 	reducer: ((), _) => ReasonReact.NoUpdate,
 	render: self =>
@@ -32,4 +36,5 @@ let make = (_children) => {
 				ref={self.handle(setCanvasRef)}
 			/>
 		</div>,
+	}
 };
