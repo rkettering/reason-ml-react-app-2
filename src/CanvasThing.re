@@ -8,7 +8,7 @@ let component = ReasonReact.reducerComponent("CanvasThing");
 
 
 let make = (_children) => {
-	let handleClick = (_event, self) => {
+	let handleClick = (_event, self: ReasonReact.self(state, ReasonReact.noRetainedProps, unit)) => {
 		Js.log(self.state);
 	};
 
