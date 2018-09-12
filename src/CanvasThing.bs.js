@@ -4,13 +4,25 @@
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var Js_primitive = require("bs-platform/lib/js/js_primitive.js");
 
 var component = ReasonReact.reducerComponent("CanvasThing");
+
+function setCanvasRef(theRef, param) {
+  param[/* state */1][/* canvasRef */0][0] = (theRef == null) ? undefined : Js_primitive.some(theRef);
+  return /* () */0;
+}
 
 function make() {
   var handleClick = function (_, self) {
     console.log(self[/* state */1]);
-    return /* () */0;
+    var match = self[/* state */1][/* canvasRef */0][0];
+    if (match !== undefined) {
+      Js_primitive.valFromOption(match).getContext("2d").fillRect(0.0, 0.0, 100.0, 100.0);
+      return /* () */0;
+    } else {
+      return /* () */0;
+    }
   };
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -26,6 +38,7 @@ function make() {
               return React.createElement("div", {
                           onClick: Curry._1(self[/* handle */0], handleClick)
                         }, React.createElement("canvas", {
+                              ref: Curry._1(self[/* handle */0], setCanvasRef),
                               height: "100",
                               width: "100"
                             }));
@@ -42,5 +55,6 @@ function make() {
 }
 
 exports.component = component;
+exports.setCanvasRef = setCanvasRef;
 exports.make = make;
 /* component Not a pure module */
